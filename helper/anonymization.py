@@ -1,9 +1,42 @@
 # -*- coding: utf-8 -*-
 
+from enum import Enum 
 
+class ML_Methods(Enum):
+    pass
+        
+       
+   
+class AnonymizationTypes(Enum):
+    BOTTOMUP = "bottomup",
+    CLUSTERING = "clustering",
+    K_ANONYMITY = "k_anonymity",
+    RANDOM = "random",
+    
+    @staticmethod
+    def get_type(type_name):
+        
+        if type_name == AnonymizationTypes.BOTTOMUP.value[0]:
+            return AnonymizationTypes.BOTTOMUP
+        
+        if type_name == AnonymizationTypes.CLUSTERING.value[0]:
+            return AnonymizationTypes.CLUSTERING
+        
+        if type_name == AnonymizationTypes.K_ANONYMITY.value[0]:
+            return AnonymizationTypes.K_ANONYMITY
+        
+        if type_name == AnonymizationTypes.RANDOM.value[0]:
+            return AnonymizationTypes.RANDOM
+        
+        if type_name.lower() == "all":
+            return [AnonymizationTypes.BOTTOMUP,
+                    AnonymizationTypes.CLUSTERING,
+                    AnonymizationTypes.K_ANONYMITY,
+                    AnonymizationTypes.RANDOM]
+    
 
 class AnonymizationHelper():
-        
+     
     
     @staticmethod
     def find_DGH_item(dgh_levels, dgh_name):
