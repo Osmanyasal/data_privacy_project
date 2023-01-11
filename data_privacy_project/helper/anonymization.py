@@ -1,30 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from enum import Enum
-
+from enum import Enum 
 
 class ML_Methods(Enum):
-    BOTTOMUP = "bottomup",
-    CLUSTERING = "clustering",
-    K_ANONYMITY = "k_anonymity",
-    RANDOM = "random",
-    
-    @staticmethod
-    def get_type(type_name):
+    pass
         
-        if type_name == AnonymizationTypes.BOTTOMUP.value[0]:
-            return AnonymizationTypes.BOTTOMUP
-        
-        if type_name == AnonymizationTypes.CLUSTERING.value[0]:
-            return AnonymizationTypes.CLUSTERING
-        
-        if type_name == AnonymizationTypes.K_ANONYMITY.value[0]:
-            return AnonymizationTypes.K_ANONYMITY
-        
-        if type_name == AnonymizationTypes.RANDOM.value[0]:
-            return AnonymizationTypes.RANDOM
-
-
+       
+   
 class AnonymizationTypes(Enum):
     BOTTOMUP = "bottomup",
     CLUSTERING = "clustering",
@@ -45,6 +27,13 @@ class AnonymizationTypes(Enum):
         
         if type_name == AnonymizationTypes.RANDOM.value[0]:
             return AnonymizationTypes.RANDOM
+        
+        if type_name.lower() == "all":
+            return [AnonymizationTypes.BOTTOMUP,
+                    AnonymizationTypes.CLUSTERING,
+                    AnonymizationTypes.K_ANONYMITY,
+                    AnonymizationTypes.RANDOM]
+    
 
 class AnonymizationHelper():
      

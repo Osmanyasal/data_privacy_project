@@ -3,19 +3,17 @@ Random anonymization algorithm goes here.
 """
 import numpy as np
 from helper.filebase import FileBase
-from helper.k_anonymity import KAnonymity
+from k_anonymity import KAnonymity
 class RandomAnonymizer():
     
     @staticmethod
-    def anonymize(raw_dataset, DGHs, k: int,
-        output_file: str, s: int):
+    def anonymize(raw_dataset, DGHs, k: int, s: int):
         """ K-anonymization a dataset, given a set of DGHs and a k-anonymity param.
     
         Args:
             raw_dataset_file (str): the path to the raw dataset file.
             DGH_folder (str): the path to the DGH directory.
             k (int): k-anonymity parameter.
-            output_file (str): the path to the output dataset file.
             s (int): seed of the randomization function
         """
         

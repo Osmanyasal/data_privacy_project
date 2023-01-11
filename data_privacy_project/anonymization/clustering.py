@@ -3,20 +3,19 @@ Clustering anonymization algorithm goes here.
 """
 import sys
 from copy import deepcopy
-from helper.k_anonymity import KAnonymity
+from anonymization.k_anonymity import KAnonymity
 from helper.anonymization import AnonymizationHelper
 
 class Clustering():
     
     @staticmethod
-    def anonymize(raw_dataset, DGHs, k: int, output_file: str):
+    def anonymize(raw_dataset, DGHs, k: int):
         """ Clustering-based anonymization a dataset, given a set of DGHs.
     
         Args:
             raw_dataset_file (str): the path to the raw dataset file.
             DGH_folder (str): the path to the DGH directory.
             k (int): k-anonymity parameter.
-            output_file (str): the path to the output dataset file.
         """
         for i in range(len(raw_dataset)): ##set indexing to not lose original places of records
             raw_dataset[i]["index"] = i
