@@ -6,6 +6,7 @@ import helper.parser as cli_parser
 from helper.filebase import FileBase 
 from helper.anonymization import AnonymizationTypes
 from anonymization.k_anonymity import KAnonymity
+from anonymization.laplace_noise import LaplaceNoise
 
 def anonymization_preprocessing():
     pass
@@ -31,4 +32,13 @@ if __name__ == "__main__":
                 pass
         
     else:
-        pass
+        eps_start, eps_end = dic["start_eps"], dic["end_eps"]
+        sens_start, sens_end = dic["start_sens"], dic["end_sens"]
+        num = dic["number"]
+        laplace = LaplaceNoise(eps_start, eps_end, sens_start, sens_end, num)
+        anonymized_train_images = laplace.anonymize()
+        #laplace.save_anonymized(anonymized_train_images)
+        anonymized_test_images = laplace.anonymize(False)
+        #laplace.save_anonymized(anonymized_test_images,word="test")
+        
+        
