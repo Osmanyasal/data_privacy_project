@@ -35,7 +35,7 @@ class LaplaceNoise():
             ind = 0
             train = "train"
         else:
-            ind = 2
+            ind = 4
             train = "test"
         
         #anonymized_images = {}
@@ -43,11 +43,12 @@ class LaplaceNoise():
         for eps in range(len(self.eps_vals)):
             for sensitivity in range(len(self.sensitivity_vals)):
                 anonymized_images = np.array([self.addLaplaceNoise(0, sensitivity, eps, ind)])
-                for img in range(1,len(self.dataset[ind])):
+                for img in range(len(self.dataset[ind])):
                     anonymized_images = np.append(anonymized_images,[self.addLaplaceNoise(img, sensitivity, eps, ind)],axis=0) 
                     print(img)
-                save_anonymized_eps_and_sens(anonymized_images,self.eps_vals[eps],\
+                self.save_anonymized_eps_and_sens(anonymized_images,self.eps_vals[eps],\
                                              self.sensitivity_vals[sensitivity], word = train)    
+
                     
                     
                     #if (self.eps_vals[eps],self.sensitivity_vals[sensitivity]) not in anonymized_images.keys():
@@ -73,5 +74,5 @@ class LaplaceNoise():
         if not isExist:
  
            os.makedirs(directory)
-        np.save(directory + word + "_" + "%".join(str(eps).split("."))+"_" + "%".join(str(sens).split(".")),imgs)
+        np.save(directory + word + "_" + "%".join(str(eps).split(".")) + "_" + "%".join(str(sens).split(".")),imgs)
         

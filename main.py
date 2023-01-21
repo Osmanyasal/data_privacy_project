@@ -37,8 +37,8 @@ if __name__ == "__main__":
         num = dic["number"]
         laplace = LaplaceNoise(eps_start, eps_end, sens_start, sens_end, num)
         anonymized_train_images = laplace.anonymize()
-        laplace.save_anonymized(anonymized_train_images)
+        #laplace.save_anonymized(anonymized_train_images)
         anonymized_test_images = laplace.anonymize(False)
-        laplace.save_anonymized(anonymized_test_images,word="test")
+        #laplace.save_anonymized(anonymized_test_images,word="test")
         
         
