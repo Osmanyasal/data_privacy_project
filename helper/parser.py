@@ -30,7 +30,9 @@ def parse(argv):
             prev_i = i[2:]   #.replace("--","")
         else:
             if prev_i == "anonymization":
-                dic[prev_i] = [AnonymizationTypes.get_type(i)]
+                if len(dic[prev_i]) == len(AnonymizationTypes.get_type("all")):
+                    dic[prev_i] = [AnonymizationTypes.get_type(i)]
+                else: dic[prev_i].append(AnonymizationTypes.get_type(i))
             elif prev_i == "is_tabular":
                 dic[prev_i] = i.lower().capitalize() == "True"
             elif prev_i.endswith("_k") or  prev_i == "number":
