@@ -10,7 +10,7 @@ def parse(argv):
         #"testset":None,
         "data_propotion":None,
         "test_propotion":None,
-        "ml_methods":AnonymizationTypes.get_type("all"), ## 
+        "ml_methods":"all", ## 
         "anonymization":AnonymizationTypes.get_type("all"), ## clustering, bottomup, kanonymity, random, DP
         "start_k":3, ## default
         "end_k":5, ## default
