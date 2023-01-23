@@ -7,9 +7,9 @@ from helper.anonymization import AnonymizationHelper
 class KAnonymity():
         
     @staticmethod
-    def is_dataset_k_anonymous(raw_dataset,DGHs,k_value):
+    def is_dataset_k_anonymous(dataset,DGHs,k_value):
         column_based_group_dic = {} 
-        for row in raw_dataset:
+        for row in dataset:
             key = ""
             for column in row.keys():
                 if column in DGHs:
@@ -69,9 +69,10 @@ class KAnonymity():
                     for key in non_anonymous_columns:
                         temp = AnonymizationHelper.find_DGH_item(DGHs[key], cluster[i][key])
                         temp2 = AnonymizationHelper.find_DGH_item(DGHs[key], cluster[(i+1) % k_length][key])
+                        
                         if(int(temp["level"]) >= int(temp2["level"]) and temp["parent"] != None):
                             cluster[i][key] = temp["parent"]["name"]
-                 
+                        
         anonymized_dataset = []
 
         for cluster in clusters:        #restructure according to previous indexes

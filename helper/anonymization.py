@@ -79,22 +79,22 @@ class AnonymizationHelper():
     def calculate_lm(DGHs,raw_dataset):
         cost_lm = 0
         w = 1 / len(DGHs)
-        global decended_leaf_count_cache
+        
         for item in raw_dataset:
             for key in item.keys():
                 if key in DGHs: 
                    #add education_Scholar education_Graduate ...
-                   if key+"_"+item[key] not in decended_leaf_count_cache:
-                       decended_leaf_count_cache[key+"_"+item[key]] = \
+                   if key+"_"+item[key] not in AnonymizationHelper.decended_leaf_count_cache:
+                       AnonymizationHelper.decended_leaf_count_cache[key+"_"+item[key]] = \
                            AnonymizationHelper.find_decended_leaf_count(DGHs[key], item[key])
                    
                    #add education_Any, age_Any
-                   if key+"_"+DGHs[key][0][0]["name"] not in decended_leaf_count_cache:
-                       decended_leaf_count_cache[key+"_"+DGHs[key][0][0]["name"]] = \
+                   if key+"_"+DGHs[key][0][0]["name"] not in AnonymizationHelper.decended_leaf_count_cache:
+                       AnonymizationHelper.decended_leaf_count_cache[key+"_"+DGHs[key][0][0]["name"]] = \
                            AnonymizationHelper.find_decended_leaf_count(DGHs[key], DGHs[key][0][0]["name"])
                                                                                                      
-                   cost_lm += w * ((decended_leaf_count_cache[key+"_"+item[key]] -1) / 
-                                  (decended_leaf_count_cache[key+"_"+DGHs[key][0][0]["name"]]-1))
+                   cost_lm += w * ((AnonymizationHelper.decended_leaf_count_cache[key+"_"+item[key]] -1) / 
+                                  (AnonymizationHelper.decended_leaf_count_cache[key+"_"+DGHs[key][0][0]["name"]]-1))
         
         return cost_lm
         

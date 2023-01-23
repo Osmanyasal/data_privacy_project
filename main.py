@@ -11,10 +11,13 @@ from helper.filebase import FileBase
 from helper.anonymization import AnonymizationTypes
 from helper.ml_methods import ML_Methods
 from anonymization.k_anonymity import KAnonymity
+from anonymization.clustering import Clustering
+from anonymization.bottomup import BottomUp
+from anonymization.random import RandomAnonymizer
 from anonymization.laplace_noise import LaplaceNoise
 
-def anonymization_preprocessing():
-    pass
+def anonymization_preprocessing(dic):
+    return FileBase.read_dataset(dic["dataset"])
 
 if __name__ == "__main__":
     dic = cli_parser.parse(sys.argv)
@@ -23,18 +26,28 @@ if __name__ == "__main__":
         dataset = FileBase.read_dataset(dic["dataset"])
         
         for model in dic["anonymization"]:
-            anonymization_preprocessing()
+            dataset = anonymization_preprocessing(dic)
+            
             if model == AnonymizationTypes.K_ANONYMITY:
-                for i in range(dic["start_k"],dic["end_k"]+1):
-                    anonymized_dataset = KAnonymity.anonymize(dataset, dghs, i)
-                    print(KAnonymity.is_dataset_k_anonymous(anonymized_dataset, dghs, i))
-                
-            if model == AnonymizationTypes.CLUSTERING:
-                pass
-            if model == AnonymizationTypes.BOTTOMUP:
-                pass
-            if model == AnonymizationTypes.RANDOM:
-                pass
+                for group_count in range(dic["start_k"],dic["end_k"]+1):
+                    anonymized_dataset = KAnonymity.anonymize(dataset, dghs, group_count)
+                    print(KAnonymity.is_dataset_k_anonymous(anonymized_dataset, dghs, group_count))
+                    FileBase.write_dataset(anonymized_dataset, "k_anonymity_"+str(group_count)+".csv")
+            elif model == AnonymizationTypes.CLUSTERING:
+                for group_count in range(dic["start_k"],dic["end_k"]+1):
+                    anonymized_dataset = Clustering.anonymize(dataset, dghs, group_count)
+                    print(KAnonymity.is_dataset_k_anonymous(anonymized_dataset, dghs, group_count))
+                    FileBase.write_dataset(anonymized_dataset, "clustering_"+str(group_count)+".csv")
+            elif model == AnonymizationTypes.BOTTOMUP:
+                for group_count in range(dic["start_k"],dic["end_k"]+1):
+                    anonymized_dataset = BottomUp.anonymize(dataset, dghs, group_count)
+                    print(KAnonymity.is_dataset_k_anonymous(anonymized_dataset, dghs, group_count))
+                    FileBase.write_dataset(anonymized_dataset, "bottomup_"+str(group_count)+".csv")
+            elif model == AnonymizationTypes.RANDOM:
+                for group_count in range(dic["start_k"],dic["end_k"]+1):
+                    anonymized_dataset = RandomAnonymizer.anonymize(dataset, dghs, group_count,dic["seed"])
+                    print(KAnonymity.is_dataset_k_anonymous(anonymized_dataset, dghs, group_count))
+                    FileBase.write_dataset(anonymized_dataset, "random_"+str(group_count)+".csv")
         
     else:
         eps_start, eps_end = dic["start_eps"], dic["end_eps"]

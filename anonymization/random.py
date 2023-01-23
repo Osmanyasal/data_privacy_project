@@ -3,7 +3,7 @@ Random anonymization algorithm goes here.
 """
 import numpy as np
 from helper.filebase import FileBase
-from k_anonymity import KAnonymity
+from anonymization.k_anonymity import KAnonymity
 class RandomAnonymizer():
     
     @staticmethod
@@ -30,10 +30,9 @@ class RandomAnonymizer():
         clusters = KAnonymity.anonymize(raw_dataset,DGHs,k)
         anonymized_dataset = [None] * D
     
-        for cluster in clusters:        #restructure according to previous indexes
-            for item in cluster:
-                anonymized_dataset[item['index']] = item
-                del item['index']
+        for item in clusters:        #restructure according to previous indexes
+            anonymized_dataset[item['index']] = item
+            del item['index']
     
         return anonymized_dataset
         

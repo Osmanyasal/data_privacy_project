@@ -19,6 +19,7 @@ def parse(argv):
         "start_eps":None,
         "end_eps":None,
         "number":None,
+        "seed":0
         }
     prev_i = ""
     is_first = True

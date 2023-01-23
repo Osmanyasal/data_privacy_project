@@ -47,7 +47,7 @@ class Clustering():
                         continue 
                   
                     if j not in cache_lm_for_value_i:
-                        cache_lm_for_value_i[j] = AnonymizationHelper.calculate_lm(DGHs, KAnonymity.anonymize([raw_dataset[i].copy(), raw_dataset[j].copy()],DGHs,2)[0])
+                        cache_lm_for_value_i[j] = AnonymizationHelper.calculate_lm(DGHs, KAnonymity.anonymize([raw_dataset[i].copy(), raw_dataset[j].copy()],DGHs,2))
                     
                     res = cache_lm_for_value_i[j]
                     if res < min_distance:
@@ -61,10 +61,10 @@ class Clustering():
             if len(clusters[-1]) < k:
                 clusters[-2] = original_records_of_last_anonymized + clusters[-1]
                 del clusters[-1]
-                clusters[-1] = KAnonymity.anonymize(clusters[-1], DGHs, len(clusters[-1]))[0]
+                clusters[-1] = KAnonymity.anonymize(clusters[-1], DGHs, len(clusters[-1]))
             else: 
                 original_records_of_last_anonymized = deepcopy(clusters[-1])
-                clusters[-1] = KAnonymity.anonymize(clusters[-1], DGHs, k)[0]
+                clusters[-1] = KAnonymity.anonymize(clusters[-1], DGHs, k)
         
         anonymized_dataset = [None] * len(raw_dataset) 
          

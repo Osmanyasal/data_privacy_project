@@ -4,6 +4,7 @@ Bottomup anonymization algorithm goes here.
 import sys
 import itertools
 from helper.anonymization import AnonymizationHelper
+from anonymization.k_anonymity import KAnonymity
 from copy import deepcopy
 
 class BottomUp():
@@ -36,6 +37,28 @@ class BottomUp():
           if combination[column] > (len(DGHs[column]) -1):
               return False
        return True
+   
+    @staticmethod
+        
+    def column_anonymize_by_column_name_level(raw_dataset,DGHs,column_names):
+       
+        if len(column_names) == 0:
+            return raw_dataset
+        
+        for row in raw_dataset:
+            for column_name in column_names:
+                if column_name not in DGHs: continue
+                dgh_item = AnonymizationHelper.find_DGH_item(DGHs[column_name], row[column_name]) 
+                
+                ##update current row-column until it satisfies its node level
+                for i in range(column_names[column_name]):
+                    if (len(DGHs[column_name]) - 1) - (dgh_item["level"]) >= column_names[column_name]: 
+                        break
+                    if dgh_item["parent"] != None:
+                        row[column_name] = dgh_item["parent"]["name"]
+                        dgh_item = dgh_item["parent"]
+        
+        return raw_dataset
 
     @staticmethod
     def anonymize(raw_dataset, DGHs, k: int):
@@ -68,7 +91,7 @@ class BottomUp():
                     continue
                 
                 raw_dataset = BottomUp.column_anonymize_by_column_name_level(raw_dataset, DGHs, combination)
-                if BottomUp.is_dataset_k_anonymous(raw_dataset,DGHs,k):
+                if KAnonymity.is_dataset_k_anonymous(raw_dataset,DGHs,k):
                         k_is_found_on_level = True
     
                         lm_result = AnonymizationHelper.calculate_lm(DGHs, raw_dataset)
